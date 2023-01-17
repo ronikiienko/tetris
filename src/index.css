@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+}
+
+:root {
+    --cells-container-padding: 15px
+}
+
+cell-rows-container {
+    padding: var(--cells-container-padding);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+    margin: auto;
+    /*display: block;*/
+    width: calc(100vh / 2);
+    height: calc(100vh - var(--cells-container-padding) * 2);
+    background-color: var(--cells-container-bg);
+}
+
+cells-row {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+cell {
+    display: block;
+    width: 30px;
+    height: 30px;
+    outline: 2px solid var(--cell-border);
+}
+
+cell.active {
+    background-color: var(--cell-active-bg);
+}
