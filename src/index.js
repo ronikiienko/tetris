@@ -1,30 +1,25 @@
 import {Field} from './Field';
 import {Tile} from './Tile';
-import {appendAndCreateNode} from './utils';
 
 
 console.log('hello');
 const field = new Field();
 const tile = new Tile();
 
-appendAndCreateNode(document.body, 'button',
-    [
-        {
-            attributeName: 'onclick',
-            attributeValue: function () {
-                tile.spin();
-            },
-        },
-        {
-            attributeName: 'textContent',
-            attributeValue: 'spin',
-        },
-        {
-            attributeName: 'style',
-            attributeValue: {
-                backgroundColor: 'red',
-                position: 'absolute',
-            },
-        },
-    ],
-);
+document.querySelector('button#spin').onclick = function () {
+    tile.spin();
+};
+
+document.querySelector('button#move-left').onclick = function () {
+    tile.move('left');
+};
+
+document.querySelector('button#move-down').onclick = function () {
+    tile.move('down');
+};
+
+document.querySelector('button#move-right').onclick = function () {
+    tile.move('right');
+};
+
+

@@ -54,11 +54,10 @@ export const getRandomNumberInRange = (min, max) => {
 export const appendAndCreateNode = (whereToAppend, createdNodeTag, createdNodeAttributes = [], numberToAppend = 1) => {
     try {
         const nodeToAppend = document.createElement(createdNodeTag);
-        if (createdNodeAttributes.length) {
+        if (createdNodeAttributes?.length) {
             for (const attribute of createdNodeAttributes) {
                 if (attribute.attributeName === 'style') {
                     for (let styleProperty of Object.keys(attribute.attributeValue)) {
-                        console.log(styleProperty);
                         nodeToAppend[attribute.attributeName][styleProperty] = attribute.attributeValue[styleProperty];
                     }
                 } else {
