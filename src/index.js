@@ -10,22 +10,43 @@ const tile = new Tile(() => {
 
 setInterval(function () {
     tile.move('down');
-}, 500);
+}, 1000);
 
-document.querySelector('button#spin').onclick = function () {
-    tile.move('spin');
-};
+const cellRowsContainer = document.querySelector('cell-rows-container');
 
-document.querySelector('button#move-left').onclick = function () {
-    tile.move('left');
-};
+cellRowsContainer.addEventListener('click', (event) => {
+    if (event.target !== cellRowsContainer) return;
+    console.log(event.target, 'height:', cellRowsContainer.offsetHeight, 'offsetY:', event.offsetY, 'width:', cellRowsContainer.offsetWidth, 'offsetX:', event.offsetX);
+    if (event.offsetY < cellRowsContainer.offsetHeight / 2) {
+        tile.move('spin');
+    } else {
+        if (event.offsetX < cellRowsContainer.offsetWidth / 2) {
+            tile.move('left');
+        } else {
+            tile.move('right');
+        }
+    }
+});
 
-document.querySelector('button#move-down').onclick = function () {
-    tile.move('down');
-};
-
-document.querySelector('button#move-right').onclick = function () {
-    tile.move('right');
-};
+window.addEventListener('keydown', (event) => {
+    console.log(event);
+    switch (event.key) {
+        case 'ArrowDown': {
+            tile.move('down');
+        }
+            break;
+        case 'ArrowRight': {
+            tile.move('right');
+        }
+            break;
+        case 'ArrowLeft': {
+            tile.move('left');
+        }
+            break;
+        case ' ': {
+            tile.move('spin');
+        }
+    }
+});
 
 
