@@ -1,5 +1,5 @@
-import {FIELD_WIDTH} from './consts';
-import {getRandomNumberInRange, LimitedCounter, rotateMatrix} from './utils';
+import {FIELD_HEIGHT, FIELD_WIDTH, TILE_MOVE_ACTIONS_MAP} from './consts';
+import {getRandomNumberInRange, rotateMatrix} from './utils';
 
 
 const defaultPositionTetrominoes = {
@@ -42,7 +42,7 @@ const defaultPositionTetrominoes = {
 
 const getRandomTetromino = () => {
     const tetrominoesTypes = Object.keys(defaultPositionTetrominoes);
-    return defaultPositionTetrominoes[tetrominoesTypes[getRandomNumberInRange(0, 6)]];
+    return defaultPositionTetrominoes[tetrominoesTypes[getRandomNumberInRange(0, tetrominoesTypes.length)]];
 };
 
 export class Tile {
@@ -51,23 +51,38 @@ export class Tile {
         this.tetromino = getRandomTetromino();
         this.x = Math.floor((FIELD_WIDTH / 2) - (this.tetromino[0].length / 2));
         this.y = 0;
-        this.spinCounter = new LimitedCounter(0, 3);
-        this.activeCellsCoordinates = [];
     }
 
-    checkIfWillCrash() {
-        const newActiveCellsCoordinates = [];
-        let isCrashing = false;
+    getAndCheckCoordsAfterAction(action) {
+        let x = this.x;
+        let y = this.y;
+        let tetromino = this.tetromino;
 
-        const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
-        for (let tetrominoRow = 0; tetrominoRow < this.tetromino.length; tetrominoRow++) {
-            const fieldRow = tetrominoRow + this.y;
-            const rowContainer = rowsContainer?.children[fieldRow];
-            for (let tetrominoColumn = 0; tetrominoColumn < this.tetromino.length; tetrominoColumn++) {
-                const fieldColumn = tetrominoColumn + this.x;
-                const cell = rowContainer?.children[fieldColumn];
-                if (this.tetromino?.[tetrominoRow]?.[tetrominoColumn]) {
-                    cell?.classList.add('active-temp');
+        switch (action) {
+            case TILE_MOVE_ACTIONS_MAP.spin: {
+                tetromino = rotateMatrix(tetromino);
+            }
+                break;
+            case TILE_MOVE_ACTIONS_MAP.right: {
+                x = x + 1;
+            }
+                break;
+            case TILE_MOVE_ACTIONS_MAP.left: {
+                x = x - 1;
+            }
+                break;
+            case TILE_MOVE_ACTIONS_MAP.down: {
+                y = y + 1;
+            }
+        }
+
+        const newActiveCellsCoordinates = [];
+
+        for (let tetrominoRow = 0; tetrominoRow < tetromino.length; tetrominoRow++) {
+            const fieldRow = tetrominoRow + y;
+            for (let tetrominoColumn = 0; tetrominoColumn < tetromino.length; tetrominoColumn++) {
+                const fieldColumn = tetrominoColumn + x;
+                if (tetromino?.[tetrominoRow]?.[tetrominoColumn]) {
                     newActiveCellsCoordinates.push({
                         x: fieldColumn,
                         y: fieldRow,
@@ -75,7 +90,51 @@ export class Tile {
                 }
             }
         }
-        return {newActiveCellsCoordinates, isCrashing};
+
+        const {isCrashing, shouldBeSettled} = this.checkIfWillCrash(newActiveCellsCoordinates, action);
+
+        if (!isCrashing) {
+            switch (action) {
+                case TILE_MOVE_ACTIONS_MAP.spin: {
+                    this.tetromino = rotateMatrix(this.tetromino);
+                }
+                    break;
+                case TILE_MOVE_ACTIONS_MAP.right: {
+                    this.x = this.x + 1;
+                }
+                    break;
+                case TILE_MOVE_ACTIONS_MAP.left: {
+                    this.x = this.x - 1;
+                }
+                    break;
+                case TILE_MOVE_ACTIONS_MAP.down: {
+                    this.y = this.y + 1;
+                }
+            }
+        }
+
+        return {newActiveCellsCoordinates, isCrashing, shouldBeSettled};
+    }
+
+    checkIfWillCrash(coordinates, action) {
+        let isCrashing = false;
+        let shouldBeSettled = false;
+
+        const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
+        // for (let tetrominoRow = 0; tetrominoRow < this.tetromino.length; tetrominoRow++) {
+        //     const fieldRow = tetrominoRow + this.y;
+        //     const rowContainer = rowsContainer?.children[fieldRow];
+        //     for (let tetrominoColumn = 0; tetrominoColumn < this.tetromino.length; tetrominoColumn++) {
+        //         const fieldColumn = tetrominoColumn + this.x;
+        //         const cell = rowContainer?.children[fieldColumn];
+        //     }
+        // }
+        for (let newActiveCell of coordinates) {
+            if (newActiveCell.y >= FIELD_HEIGHT && (action === TILE_MOVE_ACTIONS_MAP.down)) isCrashing = true;
+            if ((newActiveCell.x < 0 || newActiveCell.x >= FIELD_WIDTH) &&
+                (action === TILE_MOVE_ACTIONS_MAP.left || action === TILE_MOVE_ACTIONS_MAP.right)) isCrashing = true;
+        }
+        return {isCrashing, shouldBeSettled};
     }
 
     removePrevPositionTetrominoFromDom() {
@@ -100,41 +159,16 @@ export class Tile {
         }
     }
 
-    spin() {
-        console.log('prev tetromino:', this.tetromino);
-        this.tetromino = rotateMatrix(this.tetromino);
-        console.log('new tetromino:', this.tetromino);
-        const {isCrashing, newActiveCellsCoordinates} = this.checkIfWillCrash('spin');
-        console.log(newActiveCellsCoordinates);
-        if (!isCrashing) {
-            this.removePrevPositionTetrominoFromDom();
-            this.updateDomTetrominoPosition(newActiveCellsCoordinates);
-        }
-    }
-
     /**
      *
-     * @param direction {'left'|'down'|'right'}
+     * @param action {'left'|'down'|'right'|'spin'}
      */
-    move(direction) {
-        switch (direction) {
-            case 'right': {
-                this.x = this.x + 1;
-            }
-                break;
-            case 'left': {
-                this.x = this.x - 1;
-            }
-                break;
-            case 'down': {
-                this.y = this.y + 1;
-            }
-        }
-        const {isCrashing, newActiveCellsCoordinates} = this.checkIfWillCrash();
+    move(action) {
+        const {newActiveCellsCoordinates, isCrashing} = this.getAndCheckCoordsAfterAction(action);
+        // console.log(newActiveCellsCoordinates, isCrashing);
         if (!isCrashing) {
             this.removePrevPositionTetrominoFromDom();
             this.updateDomTetrominoPosition(newActiveCellsCoordinates);
         }
-        this.activeCellsCoordinates = newActiveCellsCoordinates;
     }
 }

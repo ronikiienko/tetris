@@ -99,9 +99,8 @@ export const rotateMatrix = (matrix) => {
 
     }
 
-    const len = Math.ceil(numberOfColumns / 2);
     for (let row = 0; row < numberOfRows; row++) {
-        for (let column = 0; column < len; column++) {
+        for (let column = 0; column < Math.ceil(numberOfColumns / 2); column++) {
             const tempArrVal = tempArr[row][column];
             grid[row][column] = tempArr[row][numberOfColumns - column - 1];
             grid[row][numberOfColumns - column - 1] = tempArrVal;

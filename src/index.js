@@ -7,7 +7,7 @@ const field = new Field();
 const tile = new Tile();
 
 document.querySelector('button#spin').onclick = function () {
-    tile.spin();
+    tile.move('spin');
 };
 
 document.querySelector('button#move-left').onclick = function () {
