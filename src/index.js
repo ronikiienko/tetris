@@ -10,7 +10,7 @@ const tile = new Tile(() => {
 
 setInterval(function () {
     tile.move('down');
-}, 1000);
+}, 10000);
 
 const cellRowsContainer = document.querySelector('cell-rows-container');
 
@@ -29,7 +29,6 @@ cellRowsContainer.addEventListener('click', (event) => {
 });
 
 window.addEventListener('keydown', (event) => {
-    console.log(event);
     switch (event.key) {
         case 'ArrowDown': {
             tile.move('down');
@@ -43,7 +42,8 @@ window.addEventListener('keydown', (event) => {
             tile.move('left');
         }
             break;
-        case ' ': {
+        case ' ':
+        case 'ArrowUp': {
             tile.move('spin');
         }
     }

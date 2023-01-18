@@ -3,7 +3,7 @@ body {
 }
 
 :root {
-    --cells-container-padding: 30px
+    --cells-container-padding: 10px
 }
 
 cell-rows-container {
@@ -31,13 +31,70 @@ cell {
     display: block;
     width: calc(100vh / 25);
     height: calc(100vh / 25);
-    outline: 2px solid var(--cell-border);
+    outline: 1px solid var(--cell-border);
+    border-radius: 5px;
 }
 
 cell.active {
-    background-color: green;
+    background-color: black;
 }
 
 cell.active-temp {
     background-color: var(--cell-active-bg);
+}
+
+cell.active.i {
+    background-color: var(--i-cell-settled-bg);
+}
+
+cell.active.j {
+    background-color: var(--j-cell-settled-bg);
+}
+
+cell.active.l {
+    background-color: var(--l-cell-settled-bg);
+}
+
+cell.active.o {
+    background-color: var(--o-cell-settled-bg);
+}
+
+cell.active.s {
+    background-color: var(--s-cell-settled-bg);
+}
+
+cell.active.t {
+    background-color: var(--t-cell-settled-bg);
+}
+
+cell.active.z {
+    background-color: var(--z-cell-settled-bg);
+}
+
+cell.active-temp.i {
+    background-color: var(--i-cell-bg);
+}
+
+cell.active-temp.j {
+    background-color: var(--j-cell-bg);
+}
+
+cell.active-temp.l {
+    background-color: var(--l-cell-bg);
+}
+
+cell.active-temp.o {
+    background-color: var(--o-cell-bg);
+}
+
+cell.active-temp.s {
+    background-color: var(--s-cell-bg);
+}
+
+cell.active-temp.t {
+    background-color: var(--t-cell-bg);
+}
+
+cell.active-temp.z {
+    background-color: var(--z-cell-bg);
 }

@@ -1,5 +1,19 @@
 :root {
     --cells-container-bg: #3d2323;
-    --cell-border: #bb9f9f;
+    --cell-border: rgba(187, 159, 159, 0.08);
     --cell-active-bg: #b7baef;
+    --i-cell-bg: #00f0f0;
+    --j-cell-bg: #0000f0;
+    --l-cell-bg: #f0a000;
+    --o-cell-bg: #e8e800;
+    --s-cell-bg: #00f000;
+    --t-cell-bg: #a000f0;
+    --z-cell-bg: #f00000;
+    --i-cell-settled-bg: rgba(0, 240, 243, 0.8);
+    --j-cell-settled-bg: rgba(0, 0, 240, 0.8);
+    --l-cell-settled-bg: rgba(240, 160, 0, 0.81);
+    --o-cell-settled-bg: rgba(232, 232, 0, 0.78);
+    --s-cell-settled-bg: rgba(0, 240, 0, 0.8);
+    --t-cell-settled-bg: rgba(160, 0, 240, 0.8);
+    --z-cell-settled-bg: rgba(240, 0, 0, 0.77);
 }

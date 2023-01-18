@@ -49,9 +49,10 @@ export const getRandomNumberInRange = (min, max) => {
  * @param createdNodeTag {string}
  * @param createdNodeAttributes {Array.<{attributeName: string, attributeValue: *}>}
  * @param numberToAppend {number}
+ * @param prepend {boolean}
  * @return {undefined|Array.<HTMLElement>|HTMLElement}
  */
-export const appendAndCreateNode = (whereToAppend, createdNodeTag, createdNodeAttributes = [], numberToAppend = 1) => {
+export const appendAndCreateNode = (whereToAppend, createdNodeTag, createdNodeAttributes = [], numberToAppend = 1, prepend = false) => {
     try {
         const nodeToAppend = document.createElement(createdNodeTag);
         if (createdNodeAttributes?.length) {
@@ -69,9 +70,18 @@ export const appendAndCreateNode = (whereToAppend, createdNodeTag, createdNodeAt
         let appendedNodes = [];
         for (let i = 0; i < numberToAppend; i++) {
             if (numberToAppend === 1) {
-                appendedNodes = whereToAppend.appendChild(nodeToAppend);
+                if (prepend) {
+                    appendedNodes = whereToAppend.insertBefore(nodeToAppend, whereToAppend?.firstChild);
+                } else {
+                    appendedNodes = whereToAppend.appendChild(nodeToAppend);
+                }
             } else {
-                const appendedNode = whereToAppend.appendChild(nodeToAppend.cloneNode());
+                let appendedNode;
+                if (prepend) {
+                    appendedNode = whereToAppend.insertBefore(nodeToAppend.cloneNode(), whereToAppend?.firstChild);
+                } else {
+                    appendedNode = whereToAppend.appendChild(nodeToAppend.cloneNode());
+                }
                 appendedNodes.push(appendedNode);
             }
         }
