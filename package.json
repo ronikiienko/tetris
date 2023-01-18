@@ -1,0 +1,23 @@
+{
+  "name": "tetris",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronikiienko/tetris.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ronikiienko/tetris/issues"
+  },
+  "homepage": "https://github.com/ronikiienko/tetris#readme",
+  "dependencies": {
+    "parcel": "^2.8.2"
+  }
+}
