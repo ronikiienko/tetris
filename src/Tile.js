@@ -42,15 +42,21 @@ const defaultPositionTetrominoes = {
 
 const getRandomTetromino = () => {
     const tetrominoesTypes = Object.keys(defaultPositionTetrominoes);
-    return defaultPositionTetrominoes[tetrominoesTypes[getRandomNumberInRange(0, tetrominoesTypes.length)]];
+    return defaultPositionTetrominoes[tetrominoesTypes[getRandomNumberInRange(0, 6)]];
 };
 
 export class Tile {
 
-    constructor() {
+    constructor(onSettle) {
+        this.onSettle = onSettle;
+        this.newTile();
+    }
+
+    newTile() {
         this.tetromino = getRandomTetromino();
         this.x = Math.floor((FIELD_WIDTH / 2) - (this.tetromino[0].length / 2));
         this.y = 0;
+        this.activeCellsCoordinates = [];
     }
 
     getAndCheckCoordsAfterAction(action) {
@@ -92,7 +98,6 @@ export class Tile {
         }
 
         const {isCrashing, shouldBeSettled} = this.checkIfWillCrash(newActiveCellsCoordinates, action);
-
         if (!isCrashing) {
             switch (action) {
                 case TILE_MOVE_ACTIONS_MAP.spin: {
@@ -130,9 +135,22 @@ export class Tile {
         //     }
         // }
         for (let newActiveCell of coordinates) {
-            if (newActiveCell.y >= FIELD_HEIGHT && (action === TILE_MOVE_ACTIONS_MAP.down)) isCrashing = true;
-            if ((newActiveCell.x < 0 || newActiveCell.x >= FIELD_WIDTH) &&
-                (action === TILE_MOVE_ACTIONS_MAP.left || action === TILE_MOVE_ACTIONS_MAP.right)) isCrashing = true;
+            if (newActiveCell.y >= FIELD_HEIGHT && (action === TILE_MOVE_ACTIONS_MAP.down)) {
+                isCrashing = true;
+                shouldBeSettled = true;
+            }
+            if (
+                (newActiveCell.x < 0 || newActiveCell.x >= FIELD_WIDTH) &&
+                (action === TILE_MOVE_ACTIONS_MAP.left || action === TILE_MOVE_ACTIONS_MAP.right || action === TILE_MOVE_ACTIONS_MAP.spin)
+            ) {
+                isCrashing = true;
+            }
+            if (rowsContainer.children?.[newActiveCell.y]?.children?.[newActiveCell.x]?.classList.contains('active')) {
+                isCrashing = true;
+                if (action === TILE_MOVE_ACTIONS_MAP.down) {
+                    shouldBeSettled = true;
+                }
+            }
         }
         return {isCrashing, shouldBeSettled};
     }
@@ -159,16 +177,32 @@ export class Tile {
         }
     }
 
+    settleTile() {
+        console.log('settling tile');
+        const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
+        for (let newActiveCell of this.activeCellsCoordinates) {
+            console.log(newActiveCell);
+            rowsContainer.children[newActiveCell.y].children[newActiveCell.x].className = '';
+            rowsContainer.children[newActiveCell.y].children[newActiveCell.x].classList.add('active');
+        }
+        this.newTile();
+    }
+
     /**
      *
      * @param action {'left'|'down'|'right'|'spin'}
      */
     move(action) {
-        const {newActiveCellsCoordinates, isCrashing} = this.getAndCheckCoordsAfterAction(action);
+        const {newActiveCellsCoordinates, isCrashing, shouldBeSettled} = this.getAndCheckCoordsAfterAction(action);
         // console.log(newActiveCellsCoordinates, isCrashing);
         if (!isCrashing) {
             this.removePrevPositionTetrominoFromDom();
             this.updateDomTetrominoPosition(newActiveCellsCoordinates);
         }
+        if (shouldBeSettled) {
+            this.onSettle();
+            this.settleTile(newActiveCellsCoordinates);
+        }
+        this.activeCellsCoordinates = newActiveCellsCoordinates;
     }
 }

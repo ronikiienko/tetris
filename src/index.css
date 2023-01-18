@@ -3,7 +3,7 @@ body {
 }
 
 :root {
-    --cells-container-padding: 15px
+    --cells-container-padding: 30px
 }
 
 cell-rows-container {
@@ -29,9 +29,13 @@ cells-row {
 
 cell {
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     outline: 2px solid var(--cell-border);
+}
+
+cell.active {
+    background-color: green;
 }
 
 cell.active-temp {

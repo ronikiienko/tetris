@@ -110,11 +110,11 @@ export const rotateMatrix = (matrix) => {
     return grid;
 };
 
-const matrix = [
-    [0, 1, 0],
-    [1, 1, 1],
-    [0, 0, 0],
-];
+// const matrix = [
+//     [0, 1, 0],
+//     [1, 1, 1],
+//     [0, 0, 0],
+// ];
 // const matrix = [
 //     [1, 2, 3, 4, 'a'],
 //     [5, 6, 7, 8, 'b'],
@@ -122,4 +122,4 @@ const matrix = [
 //     [13, 14, 15, 16, 'd'],
 //     [13, 14, 15, 16, 'd'],
 // ];
-console.log('matrix:', matrix, 'rotated matrix:', rotateMatrix(matrix));
+// console.log('matrix:', matrix, 'rotated matrix:', rotateMatrix(matrix));

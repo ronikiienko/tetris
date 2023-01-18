@@ -4,7 +4,9 @@ import {Tile} from './Tile';
 
 console.log('hello');
 const field = new Field();
-const tile = new Tile();
+const tile = new Tile(() => {
+    console.log('settled');
+});
 
 document.querySelector('button#spin').onclick = function () {
     tile.move('spin');
