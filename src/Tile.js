@@ -1,189 +1,42 @@
-import {FIELD_HEIGHT, FIELD_WIDTH} from './consts';
-import {getRandomNumberInRange, LimitedCounter} from './utils';
+import {FIELD_WIDTH} from './consts';
+import {getRandomNumberInRange, LimitedCounter, rotateMatrix} from './utils';
 
 
 const defaultPositionTetrominoes = {
     i: [
-        [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [1, 1, 1, 1],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [1, 1, 1, 1],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 0, 1, 0],
-            [0, 0, 1, 0],
-            [0, 0, 1, 0],
-            [0, 0, 1, 0],
-        ],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [1, 1, 1, 1],
+        [0, 0, 0, 0],
     ],
     j: [
-        [
-            [0, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 1, 1],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 1, 1],
-            [0, 0, 1, 0],
-            [0, 0, 1, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 1, 1, 1],
-            [0, 0, 0, 1],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 1, 0],
-            [0, 1, 1, 0],
-        ],
+        [1, 0, 0],
+        [1, 1, 1],
+        [0, 0, 0],
     ],
     l: [
-        [
-            [0, 0, 0, 0],
-            [0, 0, 0, 1],
-            [0, 1, 1, 1],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 1, 0],
-            [0, 0, 1, 1],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 1, 1, 1],
-            [0, 1, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 1, 1, 0],
-            [0, 0, 1, 0],
-            [0, 0, 1, 0],
-        ],
+        [0, 0, 1],
+        [1, 1, 1],
+        [0, 0, 0],
     ],
     o: [
-        [
-            [0, 0, 0, 0],
-            [0, 1, 1, 0],
-            [0, 1, 1, 0],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 1, 1, 0],
-            [0, 1, 1, 0],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 1, 1, 0],
-            [0, 1, 1, 0],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 1, 1, 0],
-            [0, 1, 1, 0],
-            [0, 0, 0, 0],
-        ],
+        [1, 1],
+        [1, 1],
     ],
     s: [
-        [
-            [0, 0, 0, 0],
-            [0, 0, 1, 1],
-            [0, 1, 1, 0],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 1, 1],
-            [0, 0, 0, 1],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 1, 1],
-            [0, 1, 1, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 1, 0],
-            [0, 0, 1, 0],
-        ],
+        [0, 1, 1],
+        [1, 1, 0],
+        [0, 0, 0],
     ],
     t: [
-        [
-            [0, 0, 0, 0],
-            [0, 0, 1, 0],
-            [0, 1, 1, 1],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 1, 1],
-            [0, 0, 1, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 1, 1, 1],
-            [0, 0, 1, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 1, 0],
-            [0, 1, 1, 0],
-            [0, 0, 1, 0],
-        ],
+        [0, 1, 0],
+        [1, 1, 1],
+        [0, 0, 0],
     ],
     z: [
-        [
-            [0, 0, 0, 0],
-            [0, 1, 1, 0],
-            [0, 0, 1, 1],
-            [0, 0, 0, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 0, 1],
-            [0, 0, 1, 1],
-            [0, 0, 1, 0],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 1, 1, 0],
-            [0, 0, 1, 1],
-        ],
-        [
-            [0, 0, 0, 0],
-            [0, 0, 1, 0],
-            [0, 1, 1, 0],
-            [0, 1, 0, 0],
-        ],
+        [1, 1, 0],
+        [0, 1, 1],
+        [0, 0, 0],
     ],
 };
 
@@ -196,24 +49,24 @@ export class Tile {
 
     constructor() {
         this.tetromino = getRandomTetromino();
-        this.x = Math.floor((FIELD_WIDTH / 2) - (this.tetromino[0][0].length / 2));
-        this.y = -4;
+        this.x = Math.floor((FIELD_WIDTH / 2) - (this.tetromino[0].length / 2));
+        this.y = 0;
         this.spinCounter = new LimitedCounter(0, 3);
         this.activeCellsCoordinates = [];
     }
 
-    checkIfWillCrash(action) {
+    checkIfWillCrash() {
         const newActiveCellsCoordinates = [];
         let isCrashing = false;
 
         const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
-        for (let tetrominoRow = 0; tetrominoRow < 4; tetrominoRow++) {
+        for (let tetrominoRow = 0; tetrominoRow < this.tetromino.length; tetrominoRow++) {
             const fieldRow = tetrominoRow + this.y;
             const rowContainer = rowsContainer?.children[fieldRow];
-            for (let tetrominoColumn = 0; tetrominoColumn < 4; tetrominoColumn++) {
+            for (let tetrominoColumn = 0; tetrominoColumn < this.tetromino.length; tetrominoColumn++) {
                 const fieldColumn = tetrominoColumn + this.x;
                 const cell = rowContainer?.children[fieldColumn];
-                if (this.tetromino[this.spinCounter.count]?.[tetrominoRow]?.[tetrominoColumn]) {
+                if (this.tetromino?.[tetrominoRow]?.[tetrominoColumn]) {
                     cell?.classList.add('active-temp');
                     newActiveCellsCoordinates.push({
                         x: fieldColumn,
@@ -222,20 +75,10 @@ export class Tile {
                 }
             }
         }
-        for (let newActiveCell of newActiveCellsCoordinates) {
-            if (newActiveCell.y >= FIELD_HEIGHT) {
-                isCrashing = true;
-            }
-        }
         return {newActiveCellsCoordinates, isCrashing};
     }
 
     removePrevPositionTetrominoFromDom() {
-        console.log('                               ');
-        console.log('                               ');
-        console.log('                               ');
-
-        console.log('removing tile');
         const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
         for (const rowContainer of rowsContainer.children) {
             for (const cell of rowContainer.children) {
@@ -250,21 +93,19 @@ export class Tile {
     }
 
     updateDomTetrominoPosition(newActiveCellsCoordinates) {
-        console.log('adding tile');
         const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
         for (const newActiveCell of newActiveCellsCoordinates) {
             const newActiveCellNode = rowsContainer.children?.[newActiveCell.y]?.children?.[newActiveCell.x];
-            console.log(newActiveCellNode, 'new active!!', newActiveCellsCoordinates);
             newActiveCellNode?.classList?.add('active-temp');
         }
-        console.log('                               ');
-        console.log('                               ');
-        console.log('                               ');
     }
 
     spin() {
-        this.spinCounter.increment();
+        console.log('prev tetromino:', this.tetromino);
+        this.tetromino = rotateMatrix(this.tetromino);
+        console.log('new tetromino:', this.tetromino);
         const {isCrashing, newActiveCellsCoordinates} = this.checkIfWillCrash('spin');
+        console.log(newActiveCellsCoordinates);
         if (!isCrashing) {
             this.removePrevPositionTetrominoFromDom();
             this.updateDomTetrominoPosition(newActiveCellsCoordinates);
@@ -289,7 +130,7 @@ export class Tile {
                 this.y = this.y + 1;
             }
         }
-        const {isCrashing, newActiveCellsCoordinates} = this.checkIfWillCrash(direction);
+        const {isCrashing, newActiveCellsCoordinates} = this.checkIfWillCrash();
         if (!isCrashing) {
             this.removePrevPositionTetrominoFromDom();
             this.updateDomTetrominoPosition(newActiveCellsCoordinates);
