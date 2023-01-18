@@ -3,7 +3,17 @@ body {
 }
 
 :root {
-    --cells-container-padding: 10px
+    --cells-container-padding: 10px;
+    --cells-shadow-active-blur-radius: 6px;
+    --cells-shadow1-active-offset: 1px;
+    --cells-shadow2-active-offset: -1px;
+    --cells-shadow-temp-blur-radius: 3px;
+    --cells-shadow1-temp-offset: 1px;
+    --cells-shadow2-temp-offset: -1px;
+    --cell-rows-container-width: calc(100vh / 2);
+    --cell-rows-container-height: calc(100vh - var(--cells-container-padding) * 2);
+    --field-width: 50;
+    --field-height: 50;
 }
 
 cell-rows-container {
@@ -14,8 +24,8 @@ cell-rows-container {
     justify-content: space-between;
     margin: auto;
     /*display: block;*/
-    width: calc(100vh / 2);
-    height: calc(100vh - var(--cells-container-padding) * 2);
+    width: var(--cell-rows-container-width);
+    height: var(--cell-rows-container-height);
     background-color: var(--cells-container-bg);
 }
 
@@ -29,8 +39,8 @@ cells-row {
 
 cell {
     display: block;
-    width: calc(100vh / 25);
-    height: calc(100vh / 25);
+    width: calc(var(--cell-rows-container-width) / (1.2 * var(--field-width)));
+    height: calc(var(--cell-rows-container-width) / (1.2 * var(--field-width)));
     outline: 1px solid var(--cell-border);
     border-radius: 5px;
 }
@@ -43,58 +53,88 @@ cell.active-temp {
     background-color: var(--cell-active-bg);
 }
 
+
 cell.active.i {
+    box-shadow: var(--cells-shadow1-active-offset) var(--cells-shadow1-active-offset) var(--cells-shadow-active-blur-radius) var(--i-cell-settled-bg),
+    var(--cells-shadow2-active-offset) var(--cells-shadow2-active-offset) var(--cells-shadow-active-blur-radius) var(--i-cell-settled-bg);
     background-color: var(--i-cell-settled-bg);
 }
 
 cell.active.j {
+    box-shadow: var(--cells-shadow1-active-offset) var(--cells-shadow1-active-offset) var(--cells-shadow-active-blur-radius) var(--j-cell-settled-bg),
+    var(--cells-shadow2-active-offset) var(--cells-shadow2-active-offset) var(--cells-shadow-active-blur-radius) var(--j-cell-settled-bg);
     background-color: var(--j-cell-settled-bg);
 }
 
 cell.active.l {
+    box-shadow: var(--cells-shadow1-active-offset) var(--cells-shadow1-active-offset) var(--cells-shadow-active-blur-radius) var(--o-cell-settled-bg),
+    var(--cells-shadow2-active-offset) var(--cells-shadow2-active-offset) var(--cells-shadow-active-blur-radius) var(--l-cell-settled-bg);
     background-color: var(--l-cell-settled-bg);
 }
 
 cell.active.o {
+    box-shadow: var(--cells-shadow1-active-offset) var(--cells-shadow1-active-offset) var(--cells-shadow-active-blur-radius) var(--o-cell-settled-bg),
+    var(--cells-shadow2-active-offset) var(--cells-shadow2-active-offset) var(--cells-shadow-active-blur-radius) var(--o-cell-settled-bg);
     background-color: var(--o-cell-settled-bg);
 }
 
 cell.active.s {
+    box-shadow: var(--cells-shadow1-active-offset) var(--cells-shadow1-active-offset) var(--cells-shadow-active-blur-radius) var(--s-cell-settled-bg),
+    var(--cells-shadow2-active-offset) var(--cells-shadow2-active-offset) var(--cells-shadow-active-blur-radius) var(--s-cell-settled-bg);
     background-color: var(--s-cell-settled-bg);
 }
 
 cell.active.t {
+    box-shadow: var(--cells-shadow1-active-offset) var(--cells-shadow1-active-offset) var(--cells-shadow-active-blur-radius) var(--t-cell-settled-bg),
+    var(--cells-shadow2-active-offset) var(--cells-shadow2-active-offset) var(--cells-shadow-active-blur-radius) var(--t-cell-settled-bg);
     background-color: var(--t-cell-settled-bg);
 }
 
 cell.active.z {
+    box-shadow: var(--cells-shadow1-active-offset) var(--cells-shadow1-active-offset) var(--cells-shadow-active-blur-radius) var(--z-cell-settled-bg),
+    var(--cells-shadow2-active-offset) var(--cells-shadow1-active-offset) var(--cells-shadow-active-blur-radius) var(--z-cell-settled-bg);
     background-color: var(--z-cell-settled-bg);
 }
 
+
 cell.active-temp.i {
+    box-shadow: var(--cells-shadow1-temp-offset) var(--cells-shadow1-temp-offset) var(--cells-shadow-temp-blur-radius) var(--i-cell-settled-bg),
+    var(--cells-shadow2-temp-offset) var(--cells-shadow2-temp-offset) var(--cells-shadow-temp-blur-radius) var(--i-cell-settled-bg);
     background-color: var(--i-cell-bg);
 }
 
 cell.active-temp.j {
+    box-shadow: var(--cells-shadow1-temp-offset) var(--cells-shadow1-temp-offset) var(--cells-shadow-temp-blur-radius) var(--j-cell-settled-bg),
+    var(--cells-shadow2-temp-offset) var(--cells-shadow2-temp-offset) var(--cells-shadow-temp-blur-radius) var(--j-cell-settled-bg);
     background-color: var(--j-cell-bg);
 }
 
 cell.active-temp.l {
+    box-shadow: var(--cells-shadow1-temp-offset) var(--cells-shadow1-temp-offset) var(--cells-shadow-temp-blur-radius) var(--l-cell-settled-bg),
+    var(--cells-shadow2-temp-offset) var(--cells-shadow2-temp-offset) var(--cells-shadow-temp-blur-radius) var(--l-cell-settled-bg);
     background-color: var(--l-cell-bg);
 }
 
 cell.active-temp.o {
+    box-shadow: var(--cells-shadow1-temp-offset) var(--cells-shadow1-temp-offset) var(--cells-shadow-temp-blur-radius) var(--o-cell-settled-bg),
+    var(--cells-shadow2-temp-offset) var(--cells-shadow2-temp-offset) var(--cells-shadow-temp-blur-radius) var(--o-cell-settled-bg);
     background-color: var(--o-cell-bg);
 }
 
 cell.active-temp.s {
+    box-shadow: var(--cells-shadow1-temp-offset) var(--cells-shadow1-temp-offset) var(--cells-shadow-temp-blur-radius) var(--s-cell-settled-bg),
+    var(--cells-shadow2-temp-offset) var(--cells-shadow2-temp-offset) var(--cells-shadow-temp-blur-radius) var(--s-cell-settled-bg);
     background-color: var(--s-cell-bg);
 }
 
 cell.active-temp.t {
+    box-shadow: var(--cells-shadow1-temp-offset) var(--cells-shadow1-temp-offset) var(--cells-shadow-temp-blur-radius) var(--t-cell-settled-bg),
+    var(--cells-shadow2-temp-offset) var(--cells-shadow2-temp-offset) var(--cells-shadow-temp-blur-radius) var(--t-cell-settled-bg);
     background-color: var(--t-cell-bg);
 }
 
 cell.active-temp.z {
+    box-shadow: var(--cells-shadow1-temp-offset) var(--cells-shadow1-temp-offset) var(--cells-shadow-temp-blur-radius) var(--z-cell-settled-bg),
+    var(--cells-shadow2-temp-offset) var(--cells-shadow2-temp-offset) var(--cells-shadow-temp-blur-radius) var(--z-cell-settled-bg);
     background-color: var(--z-cell-bg);
 }
