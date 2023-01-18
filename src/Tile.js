@@ -55,7 +55,7 @@ export class Tile {
     newTile() {
         this.tetromino = getRandomTetromino();
         this.x = Math.floor((FIELD_WIDTH / 2) - (this.tetromino[0].length / 2));
-        this.y = 0;
+        this.y = -4;
         this.activeCellsCoordinates = [];
     }
 

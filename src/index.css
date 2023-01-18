@@ -29,8 +29,8 @@ cells-row {
 
 cell {
     display: block;
-    width: 25px;
-    height: 25px;
+    width: calc(100vh / 25);
+    height: calc(100vh / 25);
     outline: 2px solid var(--cell-border);
 }
 

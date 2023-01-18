@@ -8,6 +8,10 @@ const tile = new Tile(() => {
     console.log('settled');
 });
 
+setInterval(function () {
+    tile.move('down');
+}, 500);
+
 document.querySelector('button#spin').onclick = function () {
     tile.move('spin');
 };
