@@ -1,4 +1,8 @@
-const defaultPositionTiles = {
+import {FIELD_WIDTH} from './consts';
+import {getRandomNumberInRange, LimitedCounter} from './utils';
+
+
+const defaultPositionTetrominoes = {
     i: [
         [
             [0, 0, 0, 0],
@@ -183,45 +187,47 @@ const defaultPositionTiles = {
     ],
 };
 
-const offsetArray = (array, offset) => {
-    const offsetArray = [];
-    for (let i = 0; i < array.length; i++) {
-        if (i >= offset) {
-            offsetArray[i] = array[i - offset];
-        } else {
-            offsetArray[i] = array[array.length + i - offset];
-        }
-    }
-    return offsetArray;
-};
-
-const spinArray = (array) => {
-
+const getRandomTetromino = () => {
+    const tetrominoesTypes = Object.keys(defaultPositionTetrominoes);
+    return defaultPositionTetrominoes[tetrominoesTypes[getRandomNumberInRange(0, 6)]];
 };
 
 export class Tile {
-    setTile() {
-        let tile = defaultPositionTiles.zFlipped;
-        // console.log('tile!', tile);
-        const cellRowsContainer = document.getElementsByTagName('cell-rows-container')[0];
-        for (let rowIndex = 0; rowIndex < 4; rowIndex++) {
-            for (let columnIndex = 0; columnIndex < 4; columnIndex++) {
-                console.log(cellRowsContainer.children[rowIndex].children[columnIndex]);
-                if (tile[rowIndex][columnIndex]) {
-                    const cellNode = cellRowsContainer.children[rowIndex].children[columnIndex];
-                    cellNode.classList.add('active');
-                }
+
+    constructor() {
+        this.tetromino = getRandomTetromino();
+        this.x = Math.floor((FIELD_WIDTH / 2) - (this.tetromino[0][0].length / 2));
+        this.y = -4;
+        this.spinCounter = new LimitedCounter(0, 3);
+    }
+
+    checkIfCrashing() {
+
+    }
+
+    updateDOM() {
+        console.log('x:', this.x, 'y:', this.y, 'tetromino:', this.tetromino, 'spin:', this.spinCounter.count);
+    }
+
+    spin() {
+        this.spinCounter.increment();
+        this.updateDOM();
+    }
+
+    move(direction) {
+        switch (direction) {
+            case 'right': {
+                this.x = this.x + 1;
+            }
+                break;
+            case 'left': {
+                this.x = this.x - 1;
+            }
+                break;
+            case 'bottom': {
+                this.y = this.y + 1;
             }
         }
-        let tile2 = defaultPositionTiles.z;
-        for (let rowIndex = 0; rowIndex < 4; rowIndex++) {
-            for (let columnIndex = 0; columnIndex < 4; columnIndex++) {
-                console.log(cellRowsContainer.children[rowIndex].children[columnIndex]);
-                if (tile2[rowIndex][columnIndex]) {
-                    const cellNode = cellRowsContainer.children[rowIndex].children[columnIndex + 4];
-                    cellNode.classList.add('active');
-                }
-            }
-        }
+        this.updateDOM();
     }
 }

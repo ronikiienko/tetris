@@ -1,17 +1,21 @@
 import {FIELD_HEIGHT, FIELD_WIDTH} from './consts';
+import {appendAndCreateNode} from './utils';
 
 
 export class Field {
-    init() {
-        const cellsContainer = document.createElement('cell-rows-container');
-        const cellsRowContainerGod = document.createElement('cells-row');
-        const cellNodeGod = document.createElement('cell');
+    constructor() {
+        const cellsContainer = appendAndCreateNode(document.body, 'cell-rows-container');
+        const cellRowContainers = appendAndCreateNode(cellsContainer, 'cells-row', undefined, FIELD_HEIGHT);
         for (let i = 0; i < FIELD_HEIGHT; i++) {
-            const cellsRowContainer = cellsContainer.appendChild(cellsRowContainerGod.cloneNode());
-            for (let j = 0; j < FIELD_WIDTH; j++) {
-                const cellNode = cellsRowContainer.appendChild(cellNodeGod.cloneNode());
-            }
+            appendAndCreateNode(cellRowContainers[i], 'cell', undefined, FIELD_WIDTH);
         }
-        document.body.appendChild(cellsContainer);
+    }
+
+    #handleLineups() {
+
+    }
+
+    checkLineups() {
+
     }
 }
