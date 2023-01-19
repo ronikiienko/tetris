@@ -18,10 +18,11 @@ const pauseModalHtml = `
 export class Tetris {
     constructor() {
         initField();
-        this.#openPauseModal();
+        this.start();
     }
 
     #openPauseModal() {
+        this.#closeAnyModal();
         console.log('hello');
         document.body.appendChild(document.createElement('modal')).innerHTML = pauseModalHtml;
         document.getElementById('modal-buttons-container').addEventListener('click', event => {
@@ -29,11 +30,11 @@ export class Tetris {
             switch (event.target.id) {
                 case 'resume-game-button':
                     this.start();
-                    this.#closePauseModal();
+                    this.#closeAnyModal();
                     break;
                 case 'restart-game-button':
                     this.restart();
-                    this.#closePauseModal();
+                    this.#closeAnyModal();
                     break;
                 case 'main-menu':
                     break;
@@ -41,8 +42,9 @@ export class Tetris {
         });
     }
 
-    #closePauseModal() {
-        document.body.removeChild(document.getElementsByTagName('modal')[0]);
+    #closeAnyModal() {
+        const pauseModal = document.getElementsByTagName('modal')[0];
+        if (pauseModal) document.body?.removeChild(pauseModal);
     }
 
     toggleStart() {
@@ -59,7 +61,7 @@ export class Tetris {
         this.interval = setInterval(function () {
             moveTile('down');
         }, speed);
-        this.#closePauseModal();
+        this.#closeAnyModal();
     }
 
     pause() {
