@@ -15,70 +15,71 @@ const pauseModalHtml = `
     </overlay>
 `;
 
-export class Tetris {
-    constructor() {
-        initField();
-        this.start();
-    }
 
-    #openPauseModal() {
-        this.#closeAnyModal();
-        console.log('hello');
-        document.body.appendChild(document.createElement('modal')).innerHTML = pauseModalHtml;
-        document.getElementById('modal-buttons-container').addEventListener('click', event => {
-            if (!event.target.classList.contains('modal-button')) return;
-            switch (event.target.id) {
-                case 'resume-game-button':
-                    this.start();
-                    this.#closeAnyModal();
-                    break;
-                case 'restart-game-button':
-                    this.restart();
-                    this.#closeAnyModal();
-                    break;
-                case 'main-menu':
-                    break;
-            }
-        });
-    }
+let interval;
+let isStarted;
 
-    #closeAnyModal() {
-        const pauseModal = document.getElementsByTagName('modal')[0];
-        if (pauseModal) document.body?.removeChild(pauseModal);
-    }
+export const initTetris = () => {
+    initField();
+    startGame();
+};
 
-    toggleStart() {
-        if (this.isStarted) {
-            this.pause();
-        } else {
-            this.start();
+const openPauseModal = () => {
+    closeAnyModal();
+    document.body.appendChild(document.createElement('modal')).innerHTML = pauseModalHtml;
+    document.getElementById('modal-buttons-container').addEventListener('click', event => {
+        if (!event.target.classList.contains('modal-button')) return;
+        switch (event.target.id) {
+            case 'resume-game-button':
+                startGame();
+                closeAnyModal();
+                break;
+            case 'restartGame-game-button':
+                restartGame();
+                closeAnyModal();
+                break;
+            case 'main-menu':
+                break;
         }
-    }
+    });
+};
 
-    start() {
-        if (this.isStarted) return;
-        this.isStarted = true;
-        this.interval = setInterval(function () {
-            moveTile('down');
-        }, speed);
-        this.#closeAnyModal();
-    }
+const closeAnyModal = () => {
+    const pauseModal = document.getElementsByTagName('modal')[0];
+    if (pauseModal) document.body?.removeChild(pauseModal);
+};
 
-    pause() {
-        if (!this.isStarted) return;
-        this.isStarted = false;
-        clearInterval(this.interval);
-        this.#openPauseModal();
+export const toggleStart = () => {
+    if (isStarted) {
+        pauseGame();
+    } else {
+        startGame();
     }
+};
 
-    moveTile(action) {
-        if (!this.isStarted) return;
-        moveTile(action);
-    }
+export const startGame = () => {
+    if (isStarted) return;
+    isStarted = true;
+    interval = setInterval(function () {
+        moveTile('down');
+    }, speed);
+    closeAnyModal();
+};
 
-    restart() {
-        clearField();
-        newTile();
-        this.start();
-    }
-}
+export const pauseGame = () => {
+    if (!isStarted) return;
+    isStarted = false;
+    clearInterval(interval);
+    openPauseModal();
+};
+
+export const moveTile = (action) => {
+    if (!isStarted) return;
+    moveTile(action);
+};
+
+export const restartGame = () => {
+    clearField();
+    newTile();
+    startGame();
+};

@@ -1,12 +1,11 @@
-import {Tetris} from './Tetris';
+import {initTetris, moveTile, restartGame, startGame, toggleStart} from './Tetris';
 
 
 console.log('hello');
 
-const tetris = new Tetris();
+initTetris();
 
-const cellRowsContainer = document.querySelector('cell-rows-container');
-
+// const cellRowsContainer = document.querySelector('cell-rows-container');
 // cellRowsContainer.addEventListener('click', (event) => {
 //     if (event.target !== cellRowsContainer) return;
 //     console.log(event.target, 'height:', cellRowsContainer.offsetHeight, 'offsetY:', event.offsetY, 'width:', cellRowsContainer.offsetWidth, 'offsetX:', event.offsetX);
@@ -26,35 +25,35 @@ window.addEventListener('keydown', (event) => {
     switch (event.key) {
         case 'ArrowDown':
         case 's': {
-            tetris.moveTile('down');
+            moveTile('down');
         }
             break;
         case 'ArrowRight':
         case 'd': {
-            tetris.moveTile('right');
+            moveTile('right');
         }
             break;
         case 'ArrowLeft':
         case 'a': {
-            tetris.moveTile('left');
+            moveTile('left');
         }
             break;
         case ' ': {
-            tetris.moveTile('spin');
-            tetris.start();
+            moveTile('spin');
+            startGame();
         }
             break;
         case 'ArrowUp':
         case 'w': {
-            tetris.moveTile('spin');
+            moveTile('spin');
         }
             break;
         case 'Escape': {
-            tetris.toggleStart();
+            toggleStart();
         }
             break;
         case '2': {
-            tetris.restart();
+            restartGame();
         }
     }
 });
