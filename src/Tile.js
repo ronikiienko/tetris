@@ -42,7 +42,7 @@ const defaultPositionTetrominoes = {
 
 const getRandomTetromino = () => {
     const tetrominoesTypes = Object.keys(defaultPositionTetrominoes);
-    const tetrominoName = tetrominoesTypes[getRandomNumberInRange(3, 3)];
+    const tetrominoName = tetrominoesTypes[getRandomNumberInRange(0, 6)];
     const tetromino = defaultPositionTetrominoes[tetrominoName];
     return {tetromino, tetrominoName};
 };
