@@ -1,13 +1,14 @@
-import {Field} from './Field';
-import {TileFactory} from './TileFactory';
+import {initField} from './Field';
+import {move, newTile} from './TileFactory';
 
 
 console.log('hello');
-const field = new Field();
-const tile = new TileFactory(field);
+
+initField();
+newTile();
 
 setInterval(function () {
-    tile.move('down');
+    move('down');
 }, 10000);
 
 const cellRowsContainer = document.querySelector('cell-rows-container');
@@ -16,12 +17,12 @@ cellRowsContainer.addEventListener('click', (event) => {
     if (event.target !== cellRowsContainer) return;
     console.log(event.target, 'height:', cellRowsContainer.offsetHeight, 'offsetY:', event.offsetY, 'width:', cellRowsContainer.offsetWidth, 'offsetX:', event.offsetX);
     if (event.offsetY < cellRowsContainer.offsetHeight / 2) {
-        tile.move('spin');
+        move('spin');
     } else {
         if (event.offsetX < cellRowsContainer.offsetWidth / 2) {
-            tile.move('left');
+            move('left');
         } else {
-            tile.move('right');
+            move('right');
         }
     }
 });
@@ -29,20 +30,20 @@ cellRowsContainer.addEventListener('click', (event) => {
 window.addEventListener('keydown', (event) => {
     switch (event.key) {
         case 'ArrowDown': {
-            tile.move('down');
+            move('down');
         }
             break;
         case 'ArrowRight': {
-            tile.move('right');
+            move('right');
         }
             break;
         case 'ArrowLeft': {
-            tile.move('left');
+            move('left');
         }
             break;
         case ' ':
         case 'ArrowUp': {
-            tile.move('spin');
+            move('spin');
         }
     }
 });
