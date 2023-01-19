@@ -58,4 +58,8 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
+window.addEventListener('wheel', (event) => {
+    moveTile('spin');
+});
+
 

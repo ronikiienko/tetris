@@ -1,6 +1,8 @@
 body {
     margin: 0;
     background-color: black;
+    font-family: Arial, sans-serif;
+    filter: blur(0.3px);
 }
 
 :root {
@@ -14,18 +16,18 @@ body {
     --s-cell-bg: #00f000;
     --t-cell-bg: #a000f0;
     --z-cell-bg: #f00000;
-    --i-cell-settled-bg: rgba(0, 240, 243, 0.8);
-    --j-cell-settled-bg: rgba(0, 0, 240, 0.8);
-    --l-cell-settled-bg: rgba(240, 160, 0, 0.81);
-    --o-cell-settled-bg: rgba(232, 232, 0, 0.78);
-    --s-cell-settled-bg: rgba(0, 240, 0, 0.8);
-    --t-cell-settled-bg: rgba(160, 0, 240, 0.8);
-    --z-cell-settled-bg: rgba(240, 0, 0, 0.77);
+    --i-cell-settled-bg: #00f0f0;
+    --j-cell-settled-bg: #0000f0;
+    --l-cell-settled-bg: #f0a000;
+    --o-cell-settled-bg: #e8e800;
+    --s-cell-settled-bg: #00f000;
+    --t-cell-settled-bg: #a000f0;
+    --z-cell-settled-bg: #f00000;
     --cells-container-padding: 10px;
-    --cells-shadow-active-blur-radius: 6px;
+    --cells-shadow-active-blur-radius: 10px;
     --cells-shadow1-active-offset: 1px;
     --cells-shadow2-active-offset: -1px;
-    --cells-shadow-temp-blur-radius: 3px;
+    --cells-shadow-temp-blur-radius: 6px;
     --cells-shadow1-temp-offset: 1px;
     --cells-shadow2-temp-offset: -1px;
     --cell-rows-container-width: calc(100vh / 2);
@@ -76,10 +78,12 @@ cell {
 }
 
 cell.active {
+    filter: blur(0.5px);
     background-color: black;
 }
 
 cell.active-temp {
+    filter: blur(0.5px);
     background-color: var(--cell-active-bg);
 }
 
@@ -213,22 +217,62 @@ overlay {
     margin-top: 20vh;
 }
 
+.modal-button {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 80ms, box-shadow 80ms, transform 200ms;
+}
+
 .modal-button#resume-game-button {
-    box-shadow: 2px 2px 20px var(--i-cell-bg);
-    background-color: var(--i-cell-bg);
+    box-shadow: 2px 2px 20px #00f0f0;
+    background-color: #00f0f0;
+}
+
+.modal-button#resume-game-button:hover {
+    transform: rotate(1deg);
+    box-shadow: 2px 2px 15px #01d2d2;
+    background-color: #01d2d2;
+}
+
+.modal-button#resume-game-button:active {
+    box-shadow: 2px 2px 10px #05a8a8;
+    background-color: #0aafaf;
 }
 
 .modal-button#restart-game-button {
-    box-shadow: 2px 2px 20px var(--l-cell-bg);
-    background-color: var(--l-cell-bg);
+    box-shadow: 2px 2px 20px #f0a000;
+    background-color: #f0a000;
+}
+
+.modal-button#restart-game-button:hover {
+    transform: rotate(-1deg);
+    box-shadow: 2px 2px 15px #c98703;
+    background-color: #d28d03;
+}
+
+.modal-button#restart-game-button:active {
+    box-shadow: 2px 2px 10px #a97404;
+    background-color: #a67105;
 }
 
 .modal-button#main-menu {
-    box-shadow: 2px 2px 20px var(--t-cell-bg);
-    background-color: var(--t-cell-bg);
+    box-shadow: 2px 2px 20px #a000f0;
+    background-color: #a000f0;
+}
+
+.modal-button#main-menu:hover {
+    transform: rotate(1deg);
+    box-shadow: 2px 2px 20px #8903cc;
+    background-color: #9105d7;
+}
+
+.modal-button#main-menu:active {
+    box-shadow: 2px 2px 20px #6a059d;
+    background-color: #6f05a4;
 }
 
 .modal-button:hover {
+
 }
 
 .modal-button:active {
@@ -238,8 +282,16 @@ overlay {
 #score {
     text-shadow: 2px 2px 10px white;
     position: absolute;
-    font-size: 40px;
+    font-size: 50px;
     color: white;
     left: 40px;
     top: 40px;
+}
+
+#endgame-modal-label, #endgame-modal-score {
+    text-align: center;
+    margin: 20px;
+    text-shadow: 2px 2px 10px white;
+    font-size: 50px;
+    color: white;
 }

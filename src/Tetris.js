@@ -14,6 +14,18 @@ const pauseModalHtml = `
         </modal-content>
     </overlay>
 `;
+const endgameModalHtml = `
+    <overlay>
+        <modal-content>
+            <div id="modal-buttons-container">
+                <div id="endgame-modal-label">You lose :(</div>
+                <div id="endgame-modal-score"></div>
+                <button id="restart-game-button" class="modal-button">Restart</button>
+                <button id="main-menu" class="modal-button">Main menu</button>
+            </div>
+        </modal-content>
+    </overlay>
+`;
 
 
 let interval;
@@ -43,7 +55,18 @@ const openPauseModal = () => {
 };
 
 const openEndgameModal = () => {
-
+    document.body.appendChild(document.createElement('modal')).innerHTML = endgameModalHtml;
+    document.getElementById('endgame-modal-score').textContent = `Score: ${document.getElementById('score').textContent}`;
+    document.getElementById('modal-buttons-container').addEventListener('click', event => {
+        if (!event.target.classList.contains('modal-button')) return;
+        switch (event.target.id) {
+            case 'restart-game-button':
+                restartGame();
+                break;
+            case 'main-menu':
+                break;
+        }
+    });
 };
 
 const closeAnyModal = () => {
@@ -57,6 +80,13 @@ export const toggleStart = () => {
     } else {
         startGame();
     }
+};
+
+export const endGame = () => {
+    if (!isStarted) return;
+    isStarted = false;
+    clearInterval(interval);
+    openEndgameModal();
 };
 
 export const startGame = () => {
