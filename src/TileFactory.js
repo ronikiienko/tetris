@@ -1,48 +1,10 @@
-import {FIELD_HEIGHT, FIELD_WIDTH, TILE_MOVE_ACTIONS_MAP} from './consts';
+import {defaultPositionTetrominoes, FIELD_HEIGHT, FIELD_WIDTH, TILE_MOVE_ACTIONS_MAP} from './consts';
 import {getRandomNumberInRange, rotateMatrix} from './utils';
 
 
-const defaultPositionTetrominoes = {
-    i: [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [1, 1, 1, 1],
-        [0, 0, 0, 0],
-    ],
-    j: [
-        [1, 0, 0],
-        [1, 1, 1],
-        [0, 0, 0],
-    ],
-    l: [
-        [0, 0, 1],
-        [1, 1, 1],
-        [0, 0, 0],
-    ],
-    o: [
-        [1, 1],
-        [1, 1],
-    ],
-    s: [
-        [0, 1, 1],
-        [1, 1, 0],
-        [0, 0, 0],
-    ],
-    t: [
-        [0, 1, 0],
-        [1, 1, 1],
-        [0, 0, 0],
-    ],
-    z: [
-        [1, 1, 0],
-        [0, 1, 1],
-        [0, 0, 0],
-    ]
-};
-
 const getRandomTetromino = () => {
     const tetrominoesTypes = Object.keys(defaultPositionTetrominoes);
-    const tetrominoName = tetrominoesTypes[getRandomNumberInRange(0, 6)];
+    const tetrominoName = tetrominoesTypes[getRandomNumberInRange(0, tetrominoesTypes.length - 1)];
     const tetromino = defaultPositionTetrominoes[tetrominoName];
     return {tetromino, tetrominoName};
 };
@@ -51,10 +13,10 @@ export class TileFactory {
 
     constructor(field) {
         this.field = field;
-        this.newTile();
+        this.#newTile();
     }
 
-    newTile() {
+    #newTile() {
         const {tetromino, tetrominoName} = getRandomTetromino();
         this.tetromino = tetromino;
         this.tetrominoName = tetrominoName;
@@ -63,7 +25,7 @@ export class TileFactory {
         this.activeCellsCoordinates = [];
     }
 
-    getAndCheckCoordsAfterAction(action) {
+    #getAndCheckCoordsAfterAction(action) {
         let x = this.x;
         let y = this.y;
         let tetromino = this.tetromino;
@@ -101,7 +63,7 @@ export class TileFactory {
             }
         }
 
-        const {isCrashing, shouldBeSettled} = this.checkIfWillCrash(newActiveCellsCoordinates, action);
+        const {isCrashing, shouldBeSettled} = this.#checkIfWillCrash(newActiveCellsCoordinates, action);
         if (!isCrashing) {
             switch (action) {
                 case TILE_MOVE_ACTIONS_MAP.spin: {
@@ -125,7 +87,7 @@ export class TileFactory {
         return {newActiveCellsCoordinates, isCrashing, shouldBeSettled};
     }
 
-    checkIfWillCrash(coordinates, action) {
+    #checkIfWillCrash(coordinates, action) {
         let isCrashing = false;
         let shouldBeSettled = false;
 
@@ -153,7 +115,7 @@ export class TileFactory {
         return {isCrashing, shouldBeSettled};
     }
 
-    removePrevPositionTetrominoFromDom() {
+    #removePrevPositionTetrominoFromDom() {
         console.log('removing....', this.activeCellsCoordinates);
         const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
         for (const prevActiveCell of this.activeCellsCoordinates) {
@@ -162,7 +124,7 @@ export class TileFactory {
         }
     }
 
-    updateDomTetrominoPosition(newActiveCellsCoordinates) {
+    #updateDomTetrominoPosition(newActiveCellsCoordinates) {
         const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
         for (const newActiveCell of newActiveCellsCoordinates) {
             const newActiveCellNode = rowsContainer.children?.[newActiveCell.y]?.children?.[newActiveCell.x];
@@ -171,14 +133,14 @@ export class TileFactory {
     }
 
 
-    settleTile() {
+    #settleTile() {
         const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
         for (let newActiveCell of this.activeCellsCoordinates) {
             rowsContainer.children[newActiveCell.y].children[newActiveCell.x].className = '';
             rowsContainer.children[newActiveCell.y].children[newActiveCell.x].classList.add('active', this.tetrominoName);
         }
         this.field.handleLineups();
-        this.newTile();
+        this.#newTile();
     }
 
     /**
@@ -186,15 +148,15 @@ export class TileFactory {
      * @param action {'left'|'down'|'right'|'spin'}
      */
     move(action) {
-        const {newActiveCellsCoordinates, isCrashing, shouldBeSettled} = this.getAndCheckCoordsAfterAction(action);
+        const {newActiveCellsCoordinates, isCrashing, shouldBeSettled} = this.#getAndCheckCoordsAfterAction(action);
         console.log(newActiveCellsCoordinates, isCrashing, shouldBeSettled);
         if (!isCrashing) {
-            this.removePrevPositionTetrominoFromDom();
-            this.updateDomTetrominoPosition(newActiveCellsCoordinates);
+            this.#removePrevPositionTetrominoFromDom();
+            this.#updateDomTetrominoPosition(newActiveCellsCoordinates);
             this.activeCellsCoordinates = newActiveCellsCoordinates;
         }
         if (shouldBeSettled) {
-            this.settleTile(newActiveCellsCoordinates);
+            this.#settleTile(newActiveCellsCoordinates);
         }
     }
 }
