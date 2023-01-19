@@ -10,6 +10,15 @@ export const initField = () => {
     }
 };
 
+export const clearField = () => {
+    const cellRowsContainer = document.getElementsByTagName('cell-rows-container')[0];
+    for (let cellsRow of cellRowsContainer?.children) {
+        for (let cell of cellsRow?.children) {
+            cell.className = '';
+        }
+    }
+};
+
 export const handleLineups = () => {
     const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
     const lineupRowsIndexes = [];

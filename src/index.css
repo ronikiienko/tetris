@@ -138,3 +138,8 @@ cell.active-temp.z {
     var(--cells-shadow2-temp-offset) var(--cells-shadow2-temp-offset) var(--cells-shadow-temp-blur-radius) var(--z-cell-settled-bg);
     background-color: var(--z-cell-bg);
 }
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.78);
+    z-index: 2;
+}

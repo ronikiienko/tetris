@@ -116,7 +116,6 @@ const checkIfWillCrash = (coordinates, action) => {
 };
 
 const removePrevPositionTetrominoFromDom = () => {
-    console.log('removing....', activeCellsCoordinates);
     const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
     for (const prevActiveCell of activeCellsCoordinates) {
         const prevActiveCellNode = rowsContainer.children?.[prevActiveCell.y]?.children?.[prevActiveCell.x];
@@ -147,9 +146,9 @@ const settleTile = () => {
  *
  * @param action {'left'|'down'|'right'|'spin'}
  */
-export const move = (action) => {
+export const moveTile = (action) => {
+    if (!tetromino) newTile();
     const {newActiveCellsCoordinates, isCrashing, shouldBeSettled} = getAndCheckCoordsAfterAction(action);
-    console.log(newActiveCellsCoordinates, isCrashing, shouldBeSettled);
     if (!isCrashing) {
         removePrevPositionTetrominoFromDom();
         updateDomTetrominoPosition(newActiveCellsCoordinates);

@@ -45,3 +45,5 @@ export const defaultPositionTetrominoes = {
         [0, 0, 0],
     ],
 };
+
+export const speed = 200;
