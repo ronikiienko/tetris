@@ -1,5 +1,4 @@
 import {Tetris} from './Tetris';
-import {moveTile} from './TileFactory';
 
 
 console.log('hello');
@@ -8,19 +7,19 @@ const tetris = new Tetris();
 
 const cellRowsContainer = document.querySelector('cell-rows-container');
 
-cellRowsContainer.addEventListener('click', (event) => {
-    if (event.target !== cellRowsContainer) return;
-    console.log(event.target, 'height:', cellRowsContainer.offsetHeight, 'offsetY:', event.offsetY, 'width:', cellRowsContainer.offsetWidth, 'offsetX:', event.offsetX);
-    if (event.offsetY < cellRowsContainer.offsetHeight / 2) {
-        moveTile('spin');
-    } else {
-        if (event.offsetX < cellRowsContainer.offsetWidth / 2) {
-            tetris.moveTile('left');
-        } else {
-            tetris.moveTile('right');
-        }
-    }
-});
+// cellRowsContainer.addEventListener('click', (event) => {
+//     if (event.target !== cellRowsContainer) return;
+//     console.log(event.target, 'height:', cellRowsContainer.offsetHeight, 'offsetY:', event.offsetY, 'width:', cellRowsContainer.offsetWidth, 'offsetX:', event.offsetX);
+//     if (event.offsetY < cellRowsContainer.offsetHeight / 2) {
+//         moveTile('spin');
+//     } else {
+//         if (event.offsetX < cellRowsContainer.offsetWidth / 2) {
+//             tetris.moveTile('left');
+//         } else {
+//             tetris.moveTile('right');
+//         }
+//     }
+// });
 
 window.addEventListener('keydown', (event) => {
     console.log(event.key);

@@ -139,7 +139,40 @@ cell.active-temp.z {
     background-color: var(--z-cell-bg);
 }
 
-.overlay {
+modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+overlay {
     background-color: rgba(0, 0, 0, 0.78);
     z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.modal-content {
+    width: 100%;
+    height: 100%;
+}
+
+#modal-buttons-container {
+    display: block;
+    margin: auto;
+    width: var(--cell-rows-container-width);
+}
+
+.modal-button {
+    margin-inline: auto;
+    margin-block: 100px;
+    display: block;
+    width: 80%;
+    height: 90px;
+    border-radius: 30px;
 }

@@ -46,20 +46,15 @@ export const getRandomNumberInRange = (min, max) => {
 /**
  * This function creates node by selected tag and set your attributes on it
  * @param whereToAppend {HTMLElement}
- * @param createdNodeOrTag {string}
+ * @param createdNodeTag {string}
  * @param createdNodeAttributes {Array.<{attributeName: string, attributeValue: *}>}
  * @param numberToAppend {number}
  * @param prepend {boolean}
  * @return {undefined|Array.<HTMLElement>|HTMLElement}
  */
-export const appendAndCreateNode = (whereToAppend, createdNodeOrTag, createdNodeAttributes = [], numberToAppend = 1, prepend = false) => {
+export const appendAndCreateNode = (whereToAppend, createdNodeTag, createdNodeAttributes = [], numberToAppend = 1, prepend = false) => {
     try {
-        let nodeToAppend;
-        if (typeof createdNodeOrTag === 'string') {
-            nodeToAppend = document.createElement(createdNodeOrTag);
-        } else {
-            nodeToAppend = createdNodeOrTag;
-        }
+        const nodeToAppend = document.createElement(createdNodeTag);
         if (createdNodeAttributes?.length) {
             for (const attribute of createdNodeAttributes) {
                 if (attribute.attributeName === 'style') {
