@@ -22,7 +22,7 @@ export const clearField = () => {
             cell.className = '';
         }
     }
-};
+}
 
 export const handleLineups = () => {
     const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
