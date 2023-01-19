@@ -3,6 +3,10 @@ import {appendAndCreateNode} from './utils';
 
 
 export const initField = () => {
+    appendAndCreateNode(document.body, 'span', [{
+        attributeName: 'id',
+        attributeValue: 'score',
+    }, {attributeName: 'textContent', attributeValue: '0'}]);
     const cellsContainer = appendAndCreateNode(document.body, 'cell-rows-container');
     const cellRowContainers = appendAndCreateNode(cellsContainer, 'cells-row', undefined, FIELD_HEIGHT);
     for (let i = 0; i < FIELD_HEIGHT; i++) {
@@ -11,6 +15,7 @@ export const initField = () => {
 };
 
 export const clearField = () => {
+    document.getElementById('score').textContent = '0';
     const cellRowsContainer = document.getElementsByTagName('cell-rows-container')[0];
     for (let cellsRow of cellRowsContainer?.children) {
         for (let cell of cellsRow?.children) {
@@ -33,6 +38,8 @@ export const handleLineups = () => {
         }
         isLineup && lineupRowsIndexes.push(rowIndex);
     }
+    const scoreNode = document.getElementById('score');
+    scoreNode.textContent = ((Number(scoreNode.textContent) + Math.pow(lineupRowsIndexes.length, 2))).toString();
     for (let lineupRowIndex of lineupRowsIndexes) {
         rowsContainer.removeChild(rowsContainer.children[lineupRowIndex]);
         const newCellsRowContainer = appendAndCreateNode(rowsContainer, 'cells-row', undefined, undefined, true);

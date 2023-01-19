@@ -52,7 +52,7 @@ window.addEventListener('keydown', (event) => {
             toggleStart();
         }
             break;
-        case '2': {
+        case '5': {
             restartGame();
         }
     }

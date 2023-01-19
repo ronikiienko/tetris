@@ -1,5 +1,6 @@
 import {defaultPositionTetrominoes, FIELD_HEIGHT, FIELD_WIDTH, TILE_MOVE_ACTIONS_MAP} from './consts';
 import {handleLineups} from './Field';
+import {restartGame} from './Tetris';
 import {getRandomNumberInRange, rotateMatrix} from './utils';
 
 
@@ -126,7 +127,7 @@ const removePrevPositionTetrominoFromDom = () => {
 const updateDomTetrominoPosition = (newActiveCellsCoordinates) => {
     const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
     for (const newActiveCell of newActiveCellsCoordinates) {
-        const newActiveCellNode = rowsContainer.children?.[newActiveCell.y]?.children?.[newActiveCell.x];
+        const newActiveCellNode = rowsContainer?.children?.[newActiveCell.y]?.children?.[newActiveCell.x];
         newActiveCellNode?.classList?.add('active-temp', tetrominoName);
     }
 };
@@ -135,8 +136,10 @@ const updateDomTetrominoPosition = (newActiveCellsCoordinates) => {
 const settleTile = () => {
     const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
     for (let newActiveCell of activeCellsCoordinates) {
-        rowsContainer.children[newActiveCell.y].children[newActiveCell.x].className = '';
-        rowsContainer.children[newActiveCell.y].children[newActiveCell.x].classList.add('active', tetrominoName);
+        const rowContainer = rowsContainer.children[newActiveCell.y];
+        if (!rowContainer) return restartGame();
+        rowContainer.children[newActiveCell.x].className = '';
+        rowContainer.children[newActiveCell.x].classList.add('active', tetrominoName);
     }
     handleLineups();
     newTile();

@@ -32,16 +32,18 @@ const openPauseModal = () => {
         switch (event.target.id) {
             case 'resume-game-button':
                 startGame();
-                closeAnyModal();
                 break;
-            case 'restartGame-game-button':
+            case 'restart-game-button':
                 restartGame();
-                closeAnyModal();
                 break;
             case 'main-menu':
                 break;
         }
     });
+};
+
+const openEndgameModal = () => {
+
 };
 
 const closeAnyModal = () => {
@@ -79,7 +81,9 @@ export const moveTile = (action) => {
 };
 
 export const restartGame = () => {
+    console.log('starting game');
     clearField();
     newTile();
     startGame();
+    closeAnyModal();
 };
