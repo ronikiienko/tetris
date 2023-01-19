@@ -5,20 +5,27 @@ console.log('hello');
 
 initTetris();
 
-// const cellRowsContainer = document.querySelector('cell-rows-container');
-// cellRowsContainer.addEventListener('click', (event) => {
-//     if (event.target !== cellRowsContainer) return;
-//     console.log(event.target, 'height:', cellRowsContainer.offsetHeight, 'offsetY:', event.offsetY, 'width:', cellRowsContainer.offsetWidth, 'offsetX:', event.offsetX);
-//     if (event.offsetY < cellRowsContainer.offsetHeight / 2) {
-//         moveTile('spin');
-//     } else {
-//         if (event.offsetX < cellRowsContainer.offsetWidth / 2) {
-//             tetris.moveTile('left');
-//         } else {
-//             tetris.moveTile('right');
-//         }
-//     }
-// });
+const cellRowsContainer = document.querySelector('cell-rows-container');
+cellRowsContainer.addEventListener('click', (event) => {
+    event.bubbles = false;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    if (event.target !== cellRowsContainer) return;
+    console.log(event.target, 'height:', cellRowsContainer.offsetHeight, 'offsetY:', event.offsetY, 'width:', cellRowsContainer.offsetWidth, 'offsetX:', event.offsetX);
+    if (event.offsetY < cellRowsContainer.offsetHeight * 0.2) {
+        return toggleStart();
+    }
+    if (event.offsetX <= cellRowsContainer.offsetWidth / 3) {
+        return moveTile('left');
+    }
+    if (event.offsetX >= cellRowsContainer.offsetWidth / 3 * 2) {
+        return moveTile('right');
+    } else {
+        moveTile('spin');
+    }
+
+});
 
 window.addEventListener('keydown', (event) => {
     console.log(event.key);
