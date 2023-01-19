@@ -105,7 +105,7 @@ export const pauseGame = () => {
     openPauseModal();
 };
 
-export const moveTile = (action) => {
+export const moveTileMain = (action) => {
     if (!isStarted) return;
     moveTile(action);
 };

@@ -1,4 +1,4 @@
-import {initTetris, moveTile, restartGame, startGame, toggleStart} from './Tetris';
+import {initTetris, moveTileMain, restartGame, startGame, toggleStart} from './Tetris';
 
 
 console.log('hello');
@@ -19,12 +19,12 @@ cellRowsContainer.addEventListener('click', (event) => {
         return toggleStart();
     }
     if (event.offsetX <= cellRowsContainer.offsetWidth / 3) {
-        return moveTile('left');
+        return moveTileMain('left');
     }
     if (event.offsetX >= cellRowsContainer.offsetWidth / 3 * 2) {
-        return moveTile('right');
+        return moveTileMain('right');
     } else {
-        moveTile('spin');
+        moveTileMain('spin');
     }
 
 });
@@ -34,27 +34,27 @@ window.addEventListener('keydown', (event) => {
     switch (event.key) {
         case 'ArrowDown':
         case 's': {
-            moveTile('down');
+            moveTileMain('down');
         }
             break;
         case 'ArrowRight':
         case 'd': {
-            moveTile('right');
+            moveTileMain('right');
         }
             break;
         case 'ArrowLeft':
         case 'a': {
-            moveTile('left');
+            moveTileMain('left');
         }
             break;
         case ' ': {
-            moveTile('spin');
+            moveTileMain('spin');
             startGame();
         }
             break;
         case 'ArrowUp':
         case 'w': {
-            moveTile('spin');
+            moveTileMain('spin');
         }
             break;
         case 'Escape': {
@@ -68,7 +68,7 @@ window.addEventListener('keydown', (event) => {
 });
 
 window.addEventListener('wheel', (event) => {
-    moveTile('spin');
+    moveTileMain('spin');
 });
 
 
