@@ -5,6 +5,8 @@ console.log('hello');
 
 initTetris();
 
+// TODO to stop propagation i currently use pointer events: none. Not sure about it
+
 const cellRowsContainer = document.querySelector('cell-rows-container');
 cellRowsContainer.addEventListener('click', (event) => {
     event.bubbles = false;
