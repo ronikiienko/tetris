@@ -10,7 +10,7 @@ const tile = new Tile(() => {
 
 setInterval(function () {
     tile.move('down');
-}, 1);
+}, 1000);
 
 const cellRowsContainer = document.querySelector('cell-rows-container');
 

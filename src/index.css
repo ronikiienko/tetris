@@ -12,8 +12,8 @@ body {
     --cells-shadow2-temp-offset: -1px;
     --cell-rows-container-width: calc(100vh / 2);
     --cell-rows-container-height: calc(100vh - var(--cells-container-padding) * 2);
-    --field-width: 50;
-    --field-height: 50;
+    --field-width: 10;
+    --field-height: 20;
 }
 
 cell-rows-container {

@@ -37,12 +37,12 @@ const defaultPositionTetrominoes = {
         [1, 1, 0],
         [0, 1, 1],
         [0, 0, 0],
-    ],
+    ]
 };
 
 const getRandomTetromino = () => {
     const tetrominoesTypes = Object.keys(defaultPositionTetrominoes);
-    const tetrominoName = tetrominoesTypes[getRandomNumberInRange(0, 6)];
+    const tetrominoName = tetrominoesTypes[getRandomNumberInRange(3, 3)];
     const tetromino = defaultPositionTetrominoes[tetrominoName];
     return {tetromino, tetrominoName};
 };
@@ -183,7 +183,6 @@ export class Tile {
             }
             isLineup && lineupRowsIndexes.push(rowIndex);
         }
-        console.log(lineupRowsIndexes, 'lineups');
         for (let lineupRowIndex of lineupRowsIndexes) {
             rowsContainer.removeChild(rowsContainer.children[lineupRowIndex]);
             const newCellsRowContainer = appendAndCreateNode(rowsContainer, 'cells-row', undefined, undefined, true);
