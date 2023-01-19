@@ -1,5 +1,5 @@
 import {FIELD_HEIGHT, FIELD_WIDTH, TILE_MOVE_ACTIONS_MAP} from './consts';
-import {appendAndCreateNode, getRandomNumberInRange, rotateMatrix} from './utils';
+import {getRandomNumberInRange, rotateMatrix} from './utils';
 
 
 const defaultPositionTetrominoes = {
@@ -47,9 +47,10 @@ const getRandomTetromino = () => {
     return {tetromino, tetrominoName};
 };
 
-export class Tile {
+export class TileFactory {
 
-    constructor() {
+    constructor(field) {
+        this.field = field;
         this.newTile();
     }
 
@@ -169,26 +170,6 @@ export class Tile {
         }
     }
 
-    handleLineups() {
-        const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
-        const lineupRowsIndexes = [];
-        for (let rowIndex = 0; rowIndex < rowsContainer.children.length; rowIndex++) {
-            const rowContainer = rowsContainer.children[rowIndex];
-            let isLineup = true;
-            for (let columnIndex = 0; columnIndex < rowContainer.children.length; columnIndex++) {
-                const cellNode = rowContainer.children[columnIndex];
-                if (!cellNode.classList.contains('active')) {
-                    isLineup = false;
-                }
-            }
-            isLineup && lineupRowsIndexes.push(rowIndex);
-        }
-        for (let lineupRowIndex of lineupRowsIndexes) {
-            rowsContainer.removeChild(rowsContainer.children[lineupRowIndex]);
-            const newCellsRowContainer = appendAndCreateNode(rowsContainer, 'cells-row', undefined, undefined, true);
-            appendAndCreateNode(newCellsRowContainer, 'cell', undefined, FIELD_WIDTH);
-        }
-    }
 
     settleTile() {
         const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
@@ -196,7 +177,7 @@ export class Tile {
             rowsContainer.children[newActiveCell.y].children[newActiveCell.x].className = '';
             rowsContainer.children[newActiveCell.y].children[newActiveCell.x].classList.add('active', this.tetrominoName);
         }
-        this.handleLineups();
+        this.field.handleLineups();
         this.newTile();
     }
 

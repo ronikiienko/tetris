@@ -1,16 +1,14 @@
 import {Field} from './Field';
-import {Tile} from './Tile';
+import {TileFactory} from './TileFactory';
 
 
 console.log('hello');
 const field = new Field();
-const tile = new Tile(() => {
-    console.log('settled');
-});
+const tile = new TileFactory(field);
 
 setInterval(function () {
     tile.move('down');
-}, 1000);
+}, 10000);
 
 const cellRowsContainer = document.querySelector('cell-rows-container');
 
