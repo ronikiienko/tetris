@@ -34,7 +34,7 @@ let isStarted;
 export const initTetris = () => {
     initField();
     startGame();
-}
+};
 
 const openPauseModal = () => {
     closeAnyModal();
