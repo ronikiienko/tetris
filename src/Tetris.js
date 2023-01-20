@@ -90,6 +90,7 @@ export const endGame = () => {
 };
 
 export const startGame = () => {
+    console.log('start game');
     if (isStarted) return;
     isStarted = true;
     interval = setInterval(function () {
@@ -99,6 +100,7 @@ export const startGame = () => {
 };
 
 export const pauseGame = () => {
+    console.log('pause game');
     if (!isStarted) return;
     isStarted = false;
     clearInterval(interval);
@@ -111,7 +113,7 @@ export const moveTileMain = (action) => {
 };
 
 export const restartGame = () => {
-    console.log('starting game');
+    console.log('restarting game');
     clearField();
     newTile();
     startGame();

@@ -2,7 +2,7 @@ body {
     margin: 0;
     background-color: black;
     font-family: Arial, sans-serif;
-    filter: blur(0.3px);
+    /*filter: blur(0.3px);*/
 }
 
 :root {
@@ -80,12 +80,12 @@ cell {
 }
 
 cell.active {
-    filter: blur(0.5px);
+    /*filter: blur(0.5px);*/
     background-color: black;
 }
 
 cell.active-temp {
-    filter: blur(0.5px);
+    /*filter: blur(0.5px);*/
     background-color: var(--cell-active-bg);
 }
 
