@@ -1,27 +1,22 @@
 import {initTetris, moveTileMain, restartGame, startGame, toggleStart} from './Tetris';
 
 
-console.log('hello');
-
 initTetris();
 
 // TODO to stop propagation i currently use pointer events: none. Not sure about it
 
-const cellRowsContainer = document.querySelector('cell-rows-container');
-cellRowsContainer.addEventListener('click', (event) => {
-    event.bubbles = false;
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-    if (event.target !== cellRowsContainer) return;
-    console.log(event.target, 'height:', cellRowsContainer.offsetHeight, 'offsetY:', event.offsetY, 'width:', cellRowsContainer.offsetWidth, 'offsetX:', event.offsetX);
-    if (event.offsetY < cellRowsContainer.offsetHeight * 0.2) {
+document.body.addEventListener('click', (event) => {
+    console.log(event);
+    if (event.pageY < document.body.offsetHeight * 0.2) {
         return toggleStart();
     }
-    if (event.offsetX <= cellRowsContainer.offsetWidth / 3) {
+    if (event.pageY < document.body.offsetHeight * 0.5) {
+        return moveTileMain('down');
+    }
+    if (event.pageX <= document.body.offsetWidth / 3) {
         return moveTileMain('left');
     }
-    if (event.offsetX >= cellRowsContainer.offsetWidth / 3 * 2) {
+    if (event.pageX >= document.body.offsetWidth / 3 * 2) {
         return moveTileMain('right');
     } else {
         moveTileMain('spin');
@@ -30,7 +25,6 @@ cellRowsContainer.addEventListener('click', (event) => {
 });
 
 window.addEventListener('keydown', (event) => {
-    console.log(event.key);
     switch (event.key) {
         case 'ArrowDown':
         case 's': {
@@ -66,9 +60,9 @@ window.addEventListener('keydown', (event) => {
         }
     }
 });
-
-window.addEventListener('wheel', (event) => {
-    moveTileMain('spin');
-});
+//
+// window.addEventListener('wheel', (event) => {
+//     moveTileMain('spin');
+// });
 
 

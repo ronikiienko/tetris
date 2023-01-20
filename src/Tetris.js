@@ -1,4 +1,3 @@
-import {speed} from './consts';
 import {clearField, initField} from './Field';
 import {moveTile, newTile} from './TileFactory';
 
@@ -90,17 +89,15 @@ export const endGame = () => {
 };
 
 export const startGame = () => {
-    console.log('start game');
     if (isStarted) return;
     isStarted = true;
     interval = setInterval(function () {
-        moveTile('down');
-    }, speed);
+        moveTileMain('down');
+    }, 1000);
     closeAnyModal();
 };
 
 export const pauseGame = () => {
-    console.log('pause game');
     if (!isStarted) return;
     isStarted = false;
     clearInterval(interval);
@@ -108,12 +105,24 @@ export const pauseGame = () => {
 };
 
 export const moveTileMain = (action) => {
+    // console.log('          ');
+    // console.log('          ');
+    // console.log('          ');
+    // console.log('          ');
+    // console.time('moving tile......');
+
     if (!isStarted) return;
-    moveTile(action);
+    for (let i = 0; i < 1; i++) {
+        moveTile(action);
+    }
+    // console.timeEnd('moving tile......');
+    // console.log('          ');
+    // console.log('          ');
+    // console.log('          ');
+    // console.log('          ');
 };
 
 export const restartGame = () => {
-    console.log('restarting game');
     clearField();
     newTile();
     startGame();

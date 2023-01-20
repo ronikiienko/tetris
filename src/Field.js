@@ -3,6 +3,7 @@ import {appendAndCreateNode} from './utils';
 
 
 export const initField = () => {
+    console.log('initialising field');
     appendAndCreateNode(document.body, 'span', [{
         attributeName: 'id',
         attributeValue: 'score',
@@ -24,11 +25,12 @@ export const clearField = () => {
     }
 }
 
-export const handleLineups = () => {
+export const handleLineups = (changedRowsIndexes) => {
     const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
     const lineupRowsIndexes = [];
-    for (let rowIndex = 0; rowIndex < rowsContainer.children.length; rowIndex++) {
-        const rowContainer = rowsContainer.children[rowIndex];
+    for (const changedRowIndex of changedRowsIndexes) {
+        const rowContainer = rowsContainer.children[changedRowIndex];
+        console.log('handle lineups check row:', rowContainer);
         let isLineup = true;
         for (let columnIndex = 0; columnIndex < rowContainer.children.length; columnIndex++) {
             const cellNode = rowContainer.children[columnIndex];
@@ -36,7 +38,7 @@ export const handleLineups = () => {
                 isLineup = false;
             }
         }
-        isLineup && lineupRowsIndexes.push(rowIndex);
+        isLineup && lineupRowsIndexes.push(changedRowIndex);
     }
     const scoreNode = document.getElementById('score');
     scoreNode.textContent = ((Number(scoreNode.textContent) + Math.pow(lineupRowsIndexes.length, 2))).toString();

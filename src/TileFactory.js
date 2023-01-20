@@ -94,7 +94,6 @@ const checkIfWillCrash = (coordinates, action) => {
 
     const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
     for (let newActiveCell of coordinates) {
-        console.log('new active cell :)', newActiveCell);
         if (newActiveCell.y >= FIELD_HEIGHT && (action === TILE_MOVE_ACTIONS_MAP.down || action === TILE_MOVE_ACTIONS_MAP.spin)) {
             isCrashing = true;
             if (action === TILE_MOVE_ACTIONS_MAP.down) {
@@ -136,16 +135,17 @@ const updateDomTetrominoPosition = (newActiveCellsCoordinates) => {
 
 const settleTile = () => {
     const rowsContainer = document.getElementsByTagName('cell-rows-container')[0];
+    const changedRowsIndexes = [];
     for (let newActiveCell of activeCellsCoordinates) {
+        if (!changedRowsIndexes.includes(newActiveCell.y)) changedRowsIndexes.push(newActiveCell.y);
         const rowContainer = rowsContainer.children[newActiveCell.y];
         if (!rowContainer) {
             return endGame();
-            // return restartGame();
         }
         rowContainer.children[newActiveCell.x].className = '';
         rowContainer.children[newActiveCell.x].classList.add('active', tetrominoName);
     }
-    handleLineups();
+    handleLineups(changedRowsIndexes);
     newTile();
 };
 
@@ -154,7 +154,6 @@ const settleTile = () => {
  * @param action {'left'|'down'|'right'|'spin'}
  */
 export const moveTile = (action) => {
-    console.log('tile move');
     if (!tetromino) newTile();
     const {newActiveCellsCoordinates, isCrashing, shouldBeSettled} = getAndCheckCoordsAfterAction(action);
     if (!isCrashing) {
@@ -163,6 +162,7 @@ export const moveTile = (action) => {
         activeCellsCoordinates = newActiveCellsCoordinates;
     }
     if (shouldBeSettled) {
+        console.log('should settle');
         settleTile(newActiveCellsCoordinates);
     }
 };

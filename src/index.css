@@ -56,7 +56,7 @@ cell-rows-container {
 }
 
 cells-row {
-    pointer-events: none;
+    /*pointer-events: none;*/
     display: flex;
     flex: 1;
     justify-content: space-around;
@@ -65,7 +65,7 @@ cells-row {
 }
 
 cell {
-    pointer-events: none;
+    /*pointer-events: none;*/
     --inactive-cell-blur-radius: 20px;
     --inactive-cell-shadow-color: rgba(255, 255, 255, 0.02);
     box-shadow: 2px 2px var(--inactive-cell-blur-radius) var(--inactive-cell-shadow-color),
