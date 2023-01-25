@@ -11,7 +11,7 @@ document.body.addEventListener('click', (event) => {
         return toggleStart();
     }
     if (event.pageY < document.body.offsetHeight * 0.5) {
-        return moveTileMain('down');
+        return moveTileMain('spin');
     }
     if (event.pageX <= document.body.offsetWidth / 3) {
         return moveTileMain('left');
@@ -19,7 +19,7 @@ document.body.addEventListener('click', (event) => {
     if (event.pageX >= document.body.offsetWidth / 3 * 2) {
         return moveTileMain('right');
     } else {
-        moveTileMain('spin');
+        moveTileMain('down');
     }
 
 });
